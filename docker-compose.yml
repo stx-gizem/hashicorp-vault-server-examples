@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+    vault-server:
+        image: vault:latest
+        container_name: vault-server
+        #            cap_add:
+        #                - IPC_LOCK
+        environment:
+            - VAULT_DEV_ROOT_TOKEN_ID=${VAULT_DEV_ROOT_TOKEN}
+            - VAULT_DEV_LISTEN_ADDRESS=0.0.0.0:8200
+            - VAULT_ADDR=http://127.0.0.1:8200
+        ports:
+            - 8200:8200
+        volumes:
+            - ./.volumes/vault/config:/config
+            - ./.volumes/vault/policies:/policies
+            - ./.volumes/vault/log:/vault/log
+        networks:
+            vault-netowrk:
+                ipv4_address: 172.21.0.10
+                aliases:
+                    - vault-server
+#    vault-client:
+#        # ..
+#        networks:
+#            vault-netowrk:
+#                ipv4_address: 172.21.0.20
+#                aliases:
+#                    - vault-client
+
+networks:
+    vault-netowrk:
+        ipam:
+            config:
+                - subnet: 172.21.0.0/24

@@ -1,0 +1,4 @@
+{
+  "MONGO_HOST": "localhost",
+  "MONGO_PASSWORD": "123456"
+}
